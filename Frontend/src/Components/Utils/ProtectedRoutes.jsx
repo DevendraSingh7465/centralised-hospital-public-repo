@@ -10,7 +10,7 @@ const ProtectedRoutes = ({ element, allowedRoles }) => {
   useEffect(() => {
     const fetchJWT = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/auth/jwt`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_BACKEND}/auth/jwt`, {
           withCredentials: true,
         });
         setUserType(response.data.role);
