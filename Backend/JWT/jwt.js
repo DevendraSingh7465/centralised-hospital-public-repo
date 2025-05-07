@@ -26,9 +26,9 @@ function createTokenandSaveCookie(ID, user_type, act, res) {
     }
     res.cookie("jwt", token, {
         maxAge: cookieExpireTime,
-        httpOnly: true, // Recommended: Protects against XSS
-        secure: true,   // Recommended for production: Only send over HTTPS
-        sameSite: "strict" // Recommended: Protects against CSRF
+        httpOnly: true, 
+        secure: true,  
+        sameSite: process.env.JWT_SameSite,
     });
 
 }
