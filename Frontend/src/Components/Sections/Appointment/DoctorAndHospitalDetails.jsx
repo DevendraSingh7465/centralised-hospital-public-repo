@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { GoDotFill } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 const DoctorAndHospitalDetails = ({ doctorID }) => {
   const [doctorId, setDoctorId] = useState([]);
@@ -19,7 +20,9 @@ const DoctorAndHospitalDetails = ({ doctorID }) => {
   const fetchHospitalAndDoctorDetails = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BACKEND}/user/FetchHospitalAndDoctorDetails/${doctorID}`,
+        `${
+          import.meta.env.VITE_API_BACKEND
+        }/user/FetchHospitalAndDoctorDetails/${doctorID}`,
         {
           withCredentials: true,
         }
@@ -32,7 +35,7 @@ const DoctorAndHospitalDetails = ({ doctorID }) => {
       setEducationDetails(response.data.doctorDetails[0].education);
       setExperience(response.data.doctorDetails[0].experience);
 
-      //   console.log("Hospital Details: ", response.data.hospitalDetails[0]);
+      // console.log("Hospital Details: ", response.data.hospitalDetails[0]);
       setHospitalDetails(response.data.hospitalDetails[0]);
       setHospitalAchievements(response.data.hospitalDetails[0].achievements);
     } catch (error) {
@@ -58,6 +61,12 @@ const DoctorAndHospitalDetails = ({ doctorID }) => {
     }
     return age;
   }
+
+  // Get Directions to the hospital
+  const handleGetDirections = (lat, lng) => {
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+    window.open(googleMapsUrl, "_blank", "noopener,noreferrer");
+  };
   return (
     <div className="flex flex-wrap justify-start items-start w-full gap-2">
       {/* Doctor Details */}
@@ -226,6 +235,17 @@ const DoctorAndHospitalDetails = ({ doctorID }) => {
             <span className="text-base font-mono">
               {hospitalDetails.pincode}
             </span>
+          </div>
+
+          <div>
+            <button
+              className="btn btn-warning text-white border-1"
+              onClick={(e) =>
+                handleGetDirections(hospitalDetails.lat, hospitalDetails.lng)
+              }
+            >
+              Get Directions
+            </button>
           </div>
         </fieldset>
       </div>
