@@ -22,6 +22,15 @@ const Login = () => {
 
   // Function to handle login
   const Signin = async (data) => {
+    const sendLoginMail = async () => {
+      try {
+        await axios.get(
+          `${import.meta.env.VITE_API_BACKEND}/mail/login/${data.email}`
+        );
+      } catch (error) {
+        console.log("Error in sending mail:", data.email);
+      }
+    };
     const userInfo = {
       email: data.email,
       password: data.password,
@@ -36,7 +45,7 @@ const Login = () => {
         .then((response) => {
           // console.log(response);
           toast.success("Login Successfull!");
-
+          sendLoginMail();
           localStorage.setItem(
             "FastMed",
             JSON.stringify({
@@ -59,7 +68,7 @@ const Login = () => {
         })
         .then((response) => {
           toast.success("Login Successfull!");
-
+          sendLoginMail();
           localStorage.setItem(
             "FastMed",
             JSON.stringify({
@@ -82,7 +91,7 @@ const Login = () => {
         })
         .then((response) => {
           toast.success("Login Successfull!");
-
+          sendLoginMail();
           localStorage.setItem(
             "FastMed",
             JSON.stringify({

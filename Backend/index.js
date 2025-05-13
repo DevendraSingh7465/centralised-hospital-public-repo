@@ -75,6 +75,7 @@ const hospitalRoutes = require('./Routes/hospital_routes');
 const doctorRoutes = require('./Routes/doctor_routes');
 const userRoutes = require('./Routes/user_routes');
 const geminiRoutes = require('./Routes/gemini_routes');
+const mailRoutes = require('./Routes/mail_routes');
 
 // Middlewares
 app.use("/auth", authRoutes);
@@ -83,4 +84,5 @@ app.use("/hospital", hospitalRoutes);
 app.use("/doctor", doctorRoutes);
 app.use("/user", userRoutes);
 app.use("/ai", geminiRoutes);
+app.use("/mail", mailRoutes);
 
