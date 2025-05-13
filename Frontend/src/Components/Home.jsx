@@ -8,11 +8,16 @@ import ChatBot from "./Sections/Chat/ChatBot";
 const Home = () => {
   return (
     <div className="">
-      <ChatBot/>
+      <ChatBot />
       <Navbar />
       <LandingPage />
-      <DoctorsSection/>
-      <ContactForm/>
+      <div id="doctor-section">
+        <DoctorsSection />
+      </div>
+
+      <div id="contact-page">
+        <ContactForm />
+      </div>
       <Footer />
     </div>
   );

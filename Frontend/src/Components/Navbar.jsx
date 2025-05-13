@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-scroll";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
 const Navbar = () => {
@@ -24,9 +25,12 @@ const Navbar = () => {
   useEffect(() => {
     const fetchJWT = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BACKEND}/auth/jwt`, {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BACKEND}/auth/jwt`,
+          {
+            withCredentials: true,
+          }
+        );
         // console.log(response.data);
         setUserType(response.data.role);
         setisLogin(true);
@@ -39,9 +43,13 @@ const Navbar = () => {
 
   const Logout = async () => {
     const userInfo = {};
-    await axios.post(`${import.meta.env.VITE_API_BACKEND}/auth/logout`, userInfo, {
-      withCredentials: true,
-    });
+    await axios.post(
+      `${import.meta.env.VITE_API_BACKEND}/auth/logout`,
+      userInfo,
+      {
+        withCredentials: true,
+      }
+    );
     setisLogin(false);
     setUserType("");
     toast.success("Logout Successfull!");
@@ -76,100 +84,144 @@ const Navbar = () => {
             >
               {userType == "admin" && (
                 <li>
-                  <Link to="/admin">Admin</Link>
+                  <NavLink to="/admin">Admin</NavLink>
                 </li>
               )}
 
               {userType == "hospital" && (
                 <li>
-                  <Link to="/hospital/admin">Admin</Link>
+                  <NavLink to="/hospital/admin">Admin</NavLink>
                 </li>
               )}
 
               <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="#" onClick={handleClick}>
-                  Book Appointment
-                </Link>
+                <NavLink to="/">Home</NavLink>
               </li>
 
               <li>
                 {userType == "patient" && (
-                  <Link to="/view_appointment">View Appointments</Link>
+                  <NavLink to="/view_appointment">View Appointments</NavLink>
                 )}
                 {userType == "doctor" && (
-                  <Link to="/view_my_appointments">My Appointments</Link>
+                  <NavLink to="/view_my_appointments">My Appointments</NavLink>
                 )}
+              </li>
+
+              <li>
+                <Link
+                  to="doctor-section"
+                  smooth={true}
+                  duration={500}
+                  spy={true}
+                  exact="true"
+                  offset={-70}
+                  activeClass="active"
+                >
+                  Doctors
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="contact-page"
+                  smooth={true}
+                  duration={500}
+                  spy={true}
+                  exact="true"
+                  offset={-70}
+                  activeClass="active"
+                >
+                  Contact
+                </Link>
               </li>
             </ul>
           </div>
-          <Link
+          <NavLink
             to="/"
             className="btn btn-active btn-accent bg-emerald-500 text-xl text-white border-0"
           >
             FastMed
-          </Link>
+          </NavLink>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-white ">
             {userType == "admin" && (
               <li>
-                <Link
+                <NavLink
                   className="active:bg-emerald-100 active:text-emerald-500"
                   to="/admin"
                 >
                   Admin
-                </Link>
+                </NavLink>
               </li>
             )}
 
             {userType == "hospital" && (
               <li>
-                <Link
+                <NavLink
                   className="active:bg-emerald-100 active:text-emerald-500"
                   to="/hospital/admin"
                 >
                   Admin
-                </Link>
+                </NavLink>
               </li>
             )}
 
             <li>
-              <Link
+              <NavLink
                 className="active:bg-emerald-100 active:text-emerald-500"
                 to="/"
               >
                 Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="active:bg-emerald-100 active:text-emerald-500"
-                to="#"
-              >
-                Book Appointment
-              </Link>
+              </NavLink>
             </li>
 
             <li>
               {userType == "patient" && (
-                <Link
+                <NavLink
                   className="active:bg-emerald-100 active:text-emerald-500"
                   to="/view_appointment"
                 >
                   View Appointments
-                </Link>
+                </NavLink>
               )}
               {userType == "doctor" && (
-                <Link
+                <NavLink
                   className="active:bg-emerald-100 active:text-emerald-500"
                   to="/view_my_appointments"
                 >
                   My Appointments
-                </Link>
+                </NavLink>
               )}
+            </li>
+
+            <li>
+              <Link
+                to="doctor-section"
+                smooth={true}
+                duration={500}
+                spy={true}
+                exact="true"
+                offset={-70}
+                activeClass="active"
+                className="active:bg-emerald-100 active:text-emerald-500"
+              >
+                Doctors
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="contact-page"
+                smooth={true}
+                duration={500}
+                spy={true}
+                exact="true"
+                offset={-70}
+                activeClass="active"
+                className="active:bg-emerald-100 active:text-emerald-500"
+              >
+                Contact
+              </Link>
             </li>
           </ul>
         </div>
@@ -210,28 +262,28 @@ const Navbar = () => {
 
                 {userType == "doctor" && (
                   <li>
-                    <Link to="/doctor_profile">Profile</Link>
+                    <NavLink to="/doctor_profile">Profile</NavLink>
                   </li>
                 )}
                 {userType == "patient" && (
                   <li>
-                    <Link to="/user_profile">Profile</Link>
+                    <NavLink to="/user_profile">Profile</NavLink>
                   </li>
                 )}
                 <li>
-                  <Link to="/" onClick={Logout}>
+                  <NavLink to="/" onClick={Logout}>
                     Logout
-                  </Link>
+                  </NavLink>
                 </li>
               </ul>
             </div>
           ) : (
-            <Link
+            <NavLink
               className="btn bg-emerald-100 text-emerald-950 border-0 hover:text-white hover:bg-transparent hover:border-1 hover:border-white"
               to="/login"
             >
               Login
-            </Link>
+            </NavLink>
           )}
         </div>
       </div>

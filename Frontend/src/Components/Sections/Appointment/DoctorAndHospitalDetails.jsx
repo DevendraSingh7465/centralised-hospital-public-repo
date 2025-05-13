@@ -70,7 +70,7 @@ const DoctorAndHospitalDetails = ({ doctorID }) => {
   return (
     <div className="flex flex-wrap justify-start items-start w-full gap-2">
       {/* Doctor Details */}
-      <div className="  w-5/12">
+      <div className="min-w-5/12">
         <fieldset className="fieldset border-base-300 rounded-box w-full border p-4">
           <legend className="fieldset-legend text-emerald-600">
             Doctor Details
@@ -173,7 +173,7 @@ const DoctorAndHospitalDetails = ({ doctorID }) => {
       </div>
 
       {/* Hospital Details */}
-      <div className="  w-5/12">
+      <div className="min-w-5/12">
         <fieldset className="fieldset border-base-300 rounded-box w-full border p-4">
           <legend className="fieldset-legend text-emerald-600">
             Hospital Details
