@@ -2,6 +2,9 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config({ path: '../.env' });
 
+// Models
+const users = require("../Models/users");
+
 // Nodemailer Configuration 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -35,13 +38,16 @@ const loginMail = async (req, res) => {
 
         // Getting email from frontend
         const { email } = req.params;
+        const user = await users.findOne({ email });
 
-        // const { to, subject } = req.body;
         const mailOptions = {
-            from: '"Adslide" <adslide7@gmail.com>',
+            from: 'FastMed',
             to: email,
-            subject: 'Test Email',
+            subject: 'Login Successful!',
             template: 'loginMail',
+            context: {
+                name: user.name,
+            },
         };
         const info = await transporter.sendMail(mailOptions);
         console.log('Mail sent successfully!', info.messageId);
@@ -51,6 +57,36 @@ const loginMail = async (req, res) => {
         res.status(500).json({ message: 'Error sending email', error: error.message }); // Send error details for debugging
     }
 };
+const contactMail = async (req, res) => {
+    try {
+        // These lines dynamically import the module and use them to send mail.
+        const hbsModule = await import('nodemailer-express-handlebars');
+        const hbs = hbsModule.default;
+        transporter.use('compile', hbs(hbsOptions));
+
+        // Getting email from frontend
+        const { name, email, message } = req.body;
+
+        const mailOptions = {
+            from: 'FastMed',
+            to: email,
+            subject: 'FastMed - Your Inquiry Received',
+            template: 'contact',
+            context: {
+                name: name,
+                email: email,
+                message: message,
+            },
+        };
+        const info = await transporter.sendMail(mailOptions);
+        console.log('Mail sent successfully!', info.messageId);
+        res.json({ message: 'Email sent successfully!' });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ message: 'Error sending email', error: error.message }); // Send error details for debugging
+    }
+}
+
 
 // Send OTP to the signup user 
 async function sendOTP(req, res) {
@@ -83,10 +119,11 @@ async function sendOTP(req, res) {
         res.json({ message: 'Email sent successfully!' });
     } catch (error) {
         console.error('Error sending email:', error);
-        res.status(500).json({ message: 'Error sending email', error: error.message }); 
+        res.status(500).json({ message: 'Error sending email', error: error.message });
     }
 }
 module.exports = {
     loginMail,
-    sendOTP
+    contactMail,
+    sendOTP,
 };

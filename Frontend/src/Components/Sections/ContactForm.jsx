@@ -22,6 +22,14 @@ const ContactForm = () => {
         }
       );
       toast.success("Message sent successfully!");
+      try {
+        await axios.post(
+          `${import.meta.env.VITE_API_BACKEND}/mail/contact`,
+          data
+        );
+      } catch (error) {
+        console.log("Error Sending mail:", error);
+      }
       reset();
     } catch (error) {
       console.log(error);
