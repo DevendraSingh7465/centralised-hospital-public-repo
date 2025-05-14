@@ -63,8 +63,7 @@ const Dashboard = () => {
       const branchCount = branches.filter(
         (branch) => branch.hospitalId === hospital._id
       ).length;
-      console.log(hospital.name,":",branchCount);
-
+      console.log(hospital.name, ":", branchCount);
 
       return {
         _id: hospital._id,
@@ -77,7 +76,7 @@ const Dashboard = () => {
     });
     // console.log(hospitals_data);
     setHospitalDetails(hospitals_data);
-  }, [hospitals,doctors,branches]);
+  }, [hospitals, doctors, branches]);
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
@@ -153,7 +152,11 @@ const Dashboard = () => {
                   <td>{hospital.city}</td>
                   <td className="flex justify-start items-center ">
                     <div className="">
-                      <Link className="tooltip w-6 h-6" data-tip="Details">
+                      <Link
+                        className="tooltip w-6 h-6"
+                        data-tip="Details"
+                        to={`/admin/hospitalDetails?hospitalId=${hospital._id}&hospitalName=${hospital.name}`}
+                      >
                         <BiSolidMessageDots className=" w-5 h-5 text-indigo-500 cursor-pointer hover:w-6 hover:h-6 transition-all duration-300 ease-in-out" />
                       </Link>
                       <Link

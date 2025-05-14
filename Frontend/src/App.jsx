@@ -37,6 +37,7 @@ import AddAchievements from "./Components/Hospital/Pages/AddAchievements";
 import DoctorProfile from "./Components/Doctor/DoctorProfile";
 import UserProfile from "./Components/Sections/UserProfile";
 import ShowDoctorProfile from "./Components/Hospital/Pages/ShowDoctorProfile";
+import HospitalDetails from "./Components/Admin/Pages/HospitalDetails";
 function App() {
   // console.log(`VITE_API_BACKEND: ${import.meta.env.VITE_API_BACKEND}`);
   return (
@@ -130,6 +131,7 @@ function App() {
           <Route path="contact_messages" element={<ContactMessages />} />
           <Route path="all_appointments" element={<AllAppointments />} />
           <Route path="editHospital" element={<EditHospital />} />
+          <Route path="hospitalDetails" element={<HospitalDetails />} />
         </Route>
 
         {/* All Hospital Admin Routes */}
