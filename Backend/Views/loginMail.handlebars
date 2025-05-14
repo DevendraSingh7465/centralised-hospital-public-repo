@@ -1,44 +1,74 @@
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      #otp{ background-color: white; color: gray; }
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .greeting {
+            font-style: italic;
+            color: #555;
+        }
+        .team-name {
+            font-weight: bold;
+            color: #007bff;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <h1>Dear {{name}}!</h1>
-    <p>
-      Welcome to FastMed, your centralized hospital management system! We're
-      pleased to confirm that you have successfully logged into your FastMed
-      account.
+    <p class="greeting">
+        Welcome to FastMed, your centralized hospital management system! We're
+        pleased to confirm that you have successfully logged into your FastMed
+        account.
+    </p>
 
-      <br />
-      <br />
-      This successful login allows you to access and manage various aspects of
-      our hospital management system, including:
-      <br />
-      <ul>
+    <p>
+        This successful login allows you to access and manage various aspects of
+        our hospital management system, including:
+    </p>
+    <ul>
         <li>Appointment Scheduling</li>
         <li>View nearby doctors</li>
         <li>Get Directions directly from the Google Maps.</li>
         <li>Chat with out bot for assistance.</li>
-      </ul>
+    </ul>
 
-      <br />
-      For security reasons, please ensure that you always log out of your
-      account when you have finished using FastMed, especially if you are using
-      a shared computer.
-
-      <br />
-      <br />
-      Thank you for being a part of the FastMed community.
-      <br />
-      <br />
-      Sincerely,
-      <br />
-      The FastMed Team
+    <p>
+        For security reasons, please ensure that you always log out of your
+        account when you have finished using FastMed, especially if you are using
+        a shared computer.
     </p>
-  </body>
+
+    <p>
+        Thank you for being a part of the FastMed community.
+    </p>
+    <p class="team-name">
+        Sincerely,
+        <br />
+        The FastMed Team
+    </p>
+</body>
 </html>
