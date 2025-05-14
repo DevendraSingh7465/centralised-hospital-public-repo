@@ -27,7 +27,8 @@ const ShowDoctorProfile = () => {
       setAchievements(response.data.achievements);
       setEducationDetails(response.data.education);
       setExperience(response.data.experience);
-    //   console.log(response.data);
+      const education_details = response.data.education;
+      console.log(education_details);
     };
 
     DoctorDetails();
@@ -136,58 +137,64 @@ const ShowDoctorProfile = () => {
       </fieldset>
 
       {/* Education */}
-      <fieldset className="fieldset border-base-300 rounded-box w-full border p-4">
-        <legend className="fieldset-legend text-2xl text-emerald-600">
-          Education
-        </legend>
+      {educationDetails.length != 0 && (
+        <fieldset className="fieldset border-base-300 rounded-box w-full border p-4">
+          <legend className="fieldset-legend text-2xl text-emerald-600">
+            Education
+          </legend>
 
-        {educationDetails.map((education,index) => {
-          return (
-            <div className="flex justify-start items-center" key={index}>
-              <span className="h-7 w-7 flex justify-center items-center">
-                <GoDotFill className="h-4 w-4 mr-1" />
-              </span>
-              <span className="text-lg font-mono">{education}</span>
-            </div>
-          );
-        })}
-      </fieldset>
+          {educationDetails.map((education, index) => {
+            return (
+              <div className="flex justify-start items-center" key={index}>
+                <span className="h-7 w-7 flex justify-center items-center">
+                  <GoDotFill className="h-4 w-4 mr-1" />
+                </span>
+                <span className="text-lg font-mono">{education}</span>
+              </div>
+            );
+          })}
+        </fieldset>
+      )}
 
       {/* Achievements */}
-      <fieldset className="fieldset border-base-300 rounded-box w-full border p-4">
-        <legend className="fieldset-legend text-2xl text-emerald-600">
-          Achievements
-        </legend>
+      {achievements.length != 0 && (
+        <fieldset className="fieldset border-base-300 rounded-box w-full border p-4">
+          <legend className="fieldset-legend text-2xl text-emerald-600">
+            Achievements
+          </legend>
 
-        {achievements.map((achievement,index) => {
-          return (
-            <div className="flex justify-start items-center" key={index}>
-              <span className="h-7 w-7 flex justify-center items-center">
-                <GoDotFill className="h-4 w-4 mr-1" />
-              </span>
-              <span className="text-lg font-mono">{achievement}</span>
-            </div>
-          );
-        })}
-      </fieldset>
+          {achievements.map((achievement, index) => {
+            return (
+              <div className="flex justify-start items-center" key={index}>
+                <span className="h-7 w-7 flex justify-center items-center">
+                  <GoDotFill className="h-4 w-4 mr-1" />
+                </span>
+                <span className="text-lg font-mono">{achievement}</span>
+              </div>
+            );
+          })}
+        </fieldset>
+      )}
 
       {/* Experience */}
-      <fieldset className="fieldset border-base-300 rounded-box w-full border p-4">
-        <legend className="fieldset-legend text-2xl text-emerald-600">
-          Experience
-        </legend>
+      {experience.length != 0 && (
+        <fieldset className="fieldset border-base-300 rounded-box w-full border p-4">
+          <legend className="fieldset-legend text-2xl text-emerald-600">
+            Experience
+          </legend>
 
-        {experience.map((experience,index) => {
-          return (
-            <div className="flex justify-start items-center" key={index}>
-              <span className="h-7 w-7 flex justify-center items-center">
-                <GoDotFill className="h-4 w-4 mr-1" />
-              </span>
-              <span className="text-lg font-mono">{experience}</span>
-            </div>
-          );
-        })}
-      </fieldset>
+          {experience.map((experience, index) => {
+            return (
+              <div className="flex justify-start items-center" key={index}>
+                <span className="h-7 w-7 flex justify-center items-center">
+                  <GoDotFill className="h-4 w-4 mr-1" />
+                </span>
+                <span className="text-lg font-mono">{experience}</span>
+              </div>
+            );
+          })}
+        </fieldset>
+      )}
     </div>
   );
 };

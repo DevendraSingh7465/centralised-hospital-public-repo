@@ -80,7 +80,7 @@ const EditDoctor = () => {
         <ul className="">
           <li className="">Admin</li>
           <li className="hover:text-emerald-500">
-            <Link to="/hospital/admin/dashboard">Dashboard</Link>
+            <Link to="/hospital/admin/doctors">Doctors</Link>
           </li>
           <li className="">Edit</li>
           <li className="text-emerald-500">{doctorName}</li>
