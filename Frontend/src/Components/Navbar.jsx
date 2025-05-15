@@ -49,6 +49,7 @@ const Navbar = () => {
     setUserType("");
     toast.success("Logout Successfull!");
     navigate("/");
+    window.location.reload();
   };
 
   return (
