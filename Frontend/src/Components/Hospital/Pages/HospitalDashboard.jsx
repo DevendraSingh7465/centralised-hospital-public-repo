@@ -196,196 +196,219 @@ const HospitalDashboard = () => {
       </div>
 
       {/* Page */}
-      <section className="text-black">
-        {/* Heading */}
-        <div className="flex justify-start items-center">
-          <h1 className="text-2xl font-bold py-3">Patients</h1>
-        </div>
+      {currentPosts.length != 0 ? (
+        <section className="text-black">
+          {/* Heading */}
+          <div className="flex justify-start items-center">
+            <h1 className="text-2xl font-bold py-3">Patients Appointments</h1>
+          </div>
 
-        <div className="p-2 flex">
-          {/* Search */}
-          <div className="flex justify-center items-center">
-            <label className="input">
-              <svg
-                className="h-[1em] opacity-50"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  fill="none"
-                  stroke="currentColor"
+          <div className="p-2 flex">
+            {/* Search */}
+            <div className="flex justify-center items-center">
+              <label className="input">
+                <svg
+                  className="h-[1em] opacity-50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
                 >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </g>
-              </svg>
-              <input
-                type="search"
-                className="grow"
-                placeholder="Search Patient"
-                onChange={(e) => handleSearchChange(e.target.value)}
-              />
-            </label>
-          </div>
-
-          {/* Branches */}
-          <div>
-            <select
-              className="btn px-2 mx-1 bg-indigo-400 text-white"
-              name="select branch"
-              onChange={(e) => handleBranchChange(e.target.value)}
-            >
-              <option value="" className="bg-white text-black">
-                Select Branch
-              </option>
-              {branches.map((branch) => (
-                <option
-                  key={branch._id}
-                  value={branch.branch}
-                  className="bg-white text-black text-center"
-                >
-                  {branch.branch}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Add Doctor */}
-          <div>
-            <select
-              name="select doctor"
-              className="btn px-2 mx-1 bg-emerald-500 text-white"
-              onChange={(e) => handleDoctorChange(e.target.value)}
-            >
-              <option className="text-black bg-white">Select Doctor</option>
-
-              {doctors.map((doctor) => (
-                <option
-                  key={doctor._id}
-                  value={doctor.name}
-                  className="text-black bg-white"
-                >
-                  {doctor.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Clear Filters */}
-          <div>
-            <a
-              href="/hospital/admin/dashboard"
-              className="btn bg-red-400 text-white"
-            >
-              <MdOutlineClear />
-            </a>
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-x-auto rounded-box text-black ">
-          <table className="table text-black border-b-2 border-green-200">
-            {/* head */}
-            <thead>
-              <tr className="text-black bg-green-50">
-                <th>Visit Date</th>
-                <th>Time</th>
-                <th>Doctor</th>
-                <th>Patient</th>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {currentPosts.map((appointment, index) => (
-                <tr key={appointment._id}>
-                  <td>{formatDate(appointment.appointment)}</td>
-                  <td>{formatTime(appointment.appointment)}</td>
-                  <td>{appointment.doctor_name}</td>
-                  <td>{appointment.patient_name}</td>
-                  <td>{calculateAge(appointment.dob)}</td>
-                  <td>{appointment.gender}</td>
-
-                  {appointment.status == "Cancelled" && (
-                    <td>
-                      <div className=" flex justify-start items-center">
-                        <div className="text-red-600 bg-red-300 px-2 rounded-2xl">
-                          Cancelled
-                        </div>
-                      </div>
-                    </td>
-                  )}
-                  {appointment.status == "Confirmed" && (
-                    <td>
-                      <div className="flex justify-start items-center">
-                        <div className="text-green-600 bg-green-100 px-2 rounded-2xl ">
-                          {appointment.status}
-                        </div>
-                      </div>
-                    </td>
-                  )}
-                  {appointment.status === "Not accepted" && (
-                    <td>
-                      <div className="flex justify-start items-center">
-                        <div className="text-yellow-600 bg-yellow-100 px-2 rounded-2xl ">
-                          {appointment.status}
-                        </div>
-                      </div>
-                    </td>
-                  )}
-                  {appointment.status === "Pending" && (
-                    <td>
-                      <div className="flex justify-start items-center">
-                        <div className="text-indigo-500 bg-indigo-100 px-2 rounded-2xl ">
-                          Pending
-                        </div>
-                      </div>
-                    </td>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          {/* Pagination */}
-          {pagesCount > 1 && (
-            <div className="p-4">
-              <div className="join">
-                {currentPage == 1 ? (
-                  <button
-                    disabled
-                    className="join-item btn bg-emerald-100"
-                  >{`<`}</button>
-                ) : (
-                  <button
-                    className="join-item btn bg-emerald-100"
-                    onClick={() => previosPage()}
-                  >{`<`}</button>
-                )}
-                <button className="join-item btn bg-white cursor-default">
-                  Page {currentPage} of {pagesCount}
-                </button>
-                {currentPage == pagesCount ? (
-                  <button
-                    disabled
-                    className="join-item btn bg-emerald-100 "
-                  >{`>`}</button>
-                ) : (
-                  <button
-                    className="join-item btn bg-emerald-100 "
-                    onClick={() => nextPage()}
-                  >{`>`}</button>
-                )}
-              </div>
+                  <g
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2.5"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                  </g>
+                </svg>
+                <input
+                  type="search"
+                  className="grow"
+                  placeholder="Search Patient"
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                />
+              </label>
             </div>
-          )}
+
+            {/* Branches */}
+            <div>
+              <select
+                className="btn px-2 mx-1 bg-indigo-400 text-white"
+                name="select branch"
+                onChange={(e) => handleBranchChange(e.target.value)}
+              >
+                <option value="" className="bg-white text-black">
+                  Select Branch
+                </option>
+                {branches.map((branch) => (
+                  <option
+                    key={branch._id}
+                    value={branch.branch}
+                    className="bg-white text-black text-center"
+                  >
+                    {branch.branch}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Add Doctor */}
+            <div>
+              <select
+                name="select doctor"
+                className="btn px-2 mx-1 bg-emerald-500 text-white"
+                onChange={(e) => handleDoctorChange(e.target.value)}
+              >
+                <option className="text-black bg-white">Select Doctor</option>
+
+                {doctors.map((doctor) => (
+                  <option
+                    key={doctor._id}
+                    value={doctor.name}
+                    className="text-black bg-white"
+                  >
+                    {doctor.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Clear Filters */}
+            <div>
+              <a
+                href="/hospital/admin/dashboard"
+                className="btn bg-red-400 text-white"
+              >
+                <MdOutlineClear />
+              </a>
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="overflow-x-auto rounded-box text-black ">
+            <table className="table text-black border-b-2 border-green-200">
+              {/* head */}
+              <thead>
+                <tr className="text-black bg-green-50">
+                  <th>Visit Date</th>
+                  <th>Time</th>
+                  <th>Doctor</th>
+                  <th>Patient</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                {currentPosts.map((appointment, index) => (
+                  <tr key={appointment._id}>
+                    <td>{formatDate(appointment.appointment)}</td>
+                    <td>{formatTime(appointment.appointment)}</td>
+                    <td>{appointment.doctor_name}</td>
+                    <td>{appointment.patient_name}</td>
+                    <td>{calculateAge(appointment.dob)}</td>
+                    <td>{appointment.gender}</td>
+
+                    {appointment.status == "Cancelled" && (
+                      <td>
+                        <div className=" flex justify-start items-center">
+                          <div className="text-red-600 bg-red-300 px-2 rounded-2xl">
+                            Cancelled
+                          </div>
+                        </div>
+                      </td>
+                    )}
+                    {appointment.status == "Confirmed" && (
+                      <td>
+                        <div className="flex justify-start items-center">
+                          <div className="text-green-600 bg-green-100 px-2 rounded-2xl ">
+                            {appointment.status}
+                          </div>
+                        </div>
+                      </td>
+                    )}
+                    {appointment.status === "Not accepted" && (
+                      <td>
+                        <div className="flex justify-start items-center">
+                          <div className="text-yellow-600 bg-yellow-100 px-2 rounded-2xl ">
+                            {appointment.status}
+                          </div>
+                        </div>
+                      </td>
+                    )}
+                    {appointment.status === "Pending" && (
+                      <td>
+                        <div className="flex justify-start items-center">
+                          <div className="text-indigo-500 bg-indigo-100 px-2 rounded-2xl ">
+                            Pending
+                          </div>
+                        </div>
+                      </td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Pagination */}
+            {pagesCount > 1 && (
+              <div className="p-4">
+                <div className="join">
+                  {currentPage == 1 ? (
+                    <button
+                      disabled
+                      className="join-item btn bg-emerald-100"
+                    >{`<`}</button>
+                  ) : (
+                    <button
+                      className="join-item btn bg-emerald-100"
+                      onClick={() => previosPage()}
+                    >{`<`}</button>
+                  )}
+                  <button className="join-item btn bg-white cursor-default">
+                    Page {currentPage} of {pagesCount}
+                  </button>
+                  {currentPage == pagesCount ? (
+                    <button
+                      disabled
+                      className="join-item btn bg-emerald-100 "
+                    >{`>`}</button>
+                  ) : (
+                    <button
+                      className="join-item btn bg-emerald-100 "
+                      onClick={() => nextPage()}
+                    >{`>`}</button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      ) : (
+        <div class="flex flex-col items-center justify-center py-8">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-16 h-16 text-gray-400 mb-4"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.932 3.374h14.74c1.715 0 2.581-1.874 1.932-3.374L12 9.75l-9.303 3.376zm0 0c-.16-.289-.43-.486-.738-.486H3.36c-.308 0-.578.197-.738.486L12 15.75l9.303-3.374c.16.289.43.486.738.486h8.54c.308 0 .578-.197.738-.486L12 9.75M12 15.75l-9.303-3.374"
+            />
+          </svg>
+          <h2 class="text-xl font-semibold text-gray-600 mb-2">
+            No Appointments Found
+          </h2>
+          
         </div>
-      </section>
+      )}
     </div>
   );
 };
