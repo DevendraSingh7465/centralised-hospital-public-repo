@@ -210,9 +210,12 @@ const DoctorsSection = () => {
 
   const fetchJWT = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_BACKEND}/auth/jwt`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BACKEND}/auth/jwt`,
+        {
+          withCredentials: true,
+        }
+      );
       setIsUserLogin(true);
       setUserType(response.data.role);
     } catch (error) {
@@ -373,83 +376,108 @@ const DoctorsSection = () => {
             </div>
 
             {/* Doctors */}
-            <div className="flex flex-wrap justify-center gap-5">
-              {currentPosts.map((doctor, index) => {
-                return (
-                  <div
-                    className="mt-20 relative w-60 h-60 rounded-2xl flex flex-col items-center bg-emerald-100"
-                    key={doctor._id}
-                  >
-                    {doctor.gender === "male" ? (
-                      <img
-                        src="./male1.png"
-                        alt="doctor image"
-                        className="h-2/3 absolute bottom-40"
-                      />
-                    ) : (
-                      <img
-                        src="./female1.png"
-                        alt="doctor image"
-                        className="h-2/3 absolute bottom-40"
-                      />
-                    )}
+            {currentPosts.length != 0 ? (
+              <div className="flex flex-wrap justify-center gap-5">
+                {currentPosts.map((doctor, index) => {
+                  return (
+                    <div
+                      className="mt-20 relative w-60 h-60 rounded-2xl flex flex-col items-center bg-emerald-100"
+                      key={doctor._id}
+                    >
+                      {doctor.gender === "male" ? (
+                        <img
+                          src="./male1.png"
+                          alt="doctor image"
+                          className="h-2/3 absolute bottom-40"
+                        />
+                      ) : (
+                        <img
+                          src="./female1.png"
+                          alt="doctor image"
+                          className="h-2/3 absolute bottom-40"
+                        />
+                      )}
 
-                    <div className="mt-20">
-                      <span className="text-emerald-600 font-semibold">
-                        Dr. {doctor.name}
-                      </span>
-                    </div>
-                    <div className="">
-                      <span className="text-emerald-600">
-                        <span className="font-semibold">Branch: </span>
-                        {doctor.branch}
-                      </span>
-                    </div>
-                    <div className="">
-                      <span className="text-emerald-600">
-                        <span className="font-semibold">Hospital: </span>
-                        {doctor.hospital}
-                      </span>
-                    </div>
-                    <div className="">
-                      <span className="text-emerald-600">
-                        <span className="font-semibold">Age: </span>
-                        {calculateAge(doctor.dob)} ({doctor.gender})
-                      </span>
-                    </div>
-
-                    {currentLocation && (
-                      <div className="">
-                        <span className="text-emerald-600">
-                          <span className="font-semibold">Distance: </span>
-                          {fetchDistance(doctor.lat, doctor.lng)} Km
+                      <div className="mt-20">
+                        <span className="text-emerald-600 font-semibold">
+                          Dr. {doctor.name}
                         </span>
                       </div>
-                    )}
-                    <div className="mt-2">
-                      {isUserLogin && userType == "patient" ? (
-                        <Link
-                          className="btn bg-indigo-600 text-white hover:text-indigo-600 hover:bg-indigo-50 hover:border-1 hover:border-indigo-600"
-                          to={`/book_appointment?doctorID=${doctor._id}&doctorName=${doctor.name}`}
-                        >
-                          Book Appointment
-                        </Link>
-                      ) : (
-                        <Link
-                          className="btn bg-indigo-600 text-white hover:text-indigo-600 hover:bg-indigo-50 hover:border-1 hover:border-indigo-600 cursor-not-allowed"
-                        >
-                          Book Appointment
-                        </Link>
+                      <div className="">
+                        <span className="text-emerald-600">
+                          <span className="font-semibold">Branch: </span>
+                          {doctor.branch}
+                        </span>
+                      </div>
+                      <div className="">
+                        <span className="text-emerald-600">
+                          <span className="font-semibold">Hospital: </span>
+                          {doctor.hospital}
+                        </span>
+                      </div>
+                      <div className="">
+                        <span className="text-emerald-600">
+                          <span className="font-semibold">Age: </span>
+                          {calculateAge(doctor.dob)} ({doctor.gender})
+                        </span>
+                      </div>
+
+                      {currentLocation && (
+                        <div className="">
+                          <span className="text-emerald-600">
+                            <span className="font-semibold">Distance: </span>
+                            {fetchDistance(doctor.lat, doctor.lng)} Km
+                          </span>
+                        </div>
                       )}
+                      <div className="mt-2">
+                        {isUserLogin && userType == "patient" ? (
+                          <Link
+                            className="btn bg-indigo-600 text-white hover:text-indigo-600 hover:bg-indigo-50 hover:border-1 hover:border-indigo-600"
+                            to={`/book_appointment?doctorID=${doctor._id}&doctorName=${doctor.name}`}
+                          >
+                            Book Appointment
+                          </Link>
+                        ) : (
+                          <Link className="btn bg-indigo-600 text-white hover:text-indigo-600 hover:bg-indigo-50 hover:border-1 hover:border-indigo-600 cursor-not-allowed">
+                            Book Appointment
+                          </Link>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div>
+                <div class="flex flex-col items-center justify-center py-10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-12 h-12 text-gray-400 mb-3"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                  <h3 class="text-lg font-semibold text-gray-700 mb-1">
+                    No Results
+                  </h3>
+                  <p class="text-sm text-gray-500">
+                    Sorry, we couldn't find any matching results.
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Pagination */}
             {pagesCount > 1 && (
-              <div className="p-4 flex justify-center items-center">
+              <div className="p-4 flex justify-center items-center mt-3">
                 <div className="join">
                   {currentPage == 1 ? (
                     <button

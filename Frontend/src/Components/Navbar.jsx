@@ -178,27 +178,26 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            {userType == "patient" ||
-              (userType == "doctor" && (
-                <li>
-                  {userType == "patient" && (
-                    <NavLink
-                      className="active:bg-emerald-100 active:text-emerald-500"
-                      to="/view_appointment"
-                    >
-                      View Appointments
-                    </NavLink>
-                  )}
-                  {userType == "doctor" && (
-                    <NavLink
-                      className="active:bg-emerald-100 active:text-emerald-500"
-                      to="/view_my_appointments"
-                    >
-                      My Appointments
-                    </NavLink>
-                  )}
-                </li>
-              ))}
+            {userType == "patient" && (
+              <li>
+                <NavLink
+                  className="active:bg-emerald-100 active:text-emerald-500"
+                  to="/view_appointment"
+                >
+                  View Appointments
+                </NavLink>
+              </li>
+            )}
+            {userType == "doctor" && (
+              <li>
+                <NavLink
+                  className="active:bg-emerald-100 active:text-emerald-500"
+                  to="/view_my_appointments"
+                >
+                  My Appointments
+                </NavLink>
+              </li>
+            )}
 
             <li>
               <Link
