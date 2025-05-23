@@ -4,6 +4,10 @@ require('dotenv').config({ path: '../.env' });
 
 // Models
 const users = require("../Models/users");
+const doctors = require("../Models/doctors");
+const hospitals = require("../Models/hospitals");
+const branches = require("../Models/branches");
+const treatments = require("../Models/treatments");
 
 // Nodemailer Configuration 
 const transporter = nodemailer.createTransport({
@@ -86,44 +90,67 @@ const contactMail = async (req, res) => {
         res.status(500).json({ message: 'Error sending email', error: error.message }); // Send error details for debugging
     }
 }
-
-
-// Send OTP to the signup user 
-async function sendOTP(req, res) {
+const appointmentConfirmed = async (req, res) => {
     try {
         // These lines dynamically import the module and use them to send mail.
         const hbsModule = await import('nodemailer-express-handlebars');
         const hbs = hbsModule.default;
         transporter.use('compile', hbs(hbsOptions));
 
-        // Getting Data from frontend
-        const { email } = req.params;
-        console.log("Sending Mail to ", email);
+        // Getting id of patient from frontend
+        const { id } = req.params;
+        const patient = await treatments.findById(id);
+        const hospital = await hospitals.findById(patient.hospitalId);
+        const user = await users.findById(patient.userId);
+        const email = user.email;
 
-        // Getting Data from verify_users collection usign email
-        const user = await verifyUser.findOne({ email: email });
-        console.log("Fetched User Info : ", user);
+        const { date, time } = splitDateTime(patient.appointment);
 
         const mailOptions = {
-            from: '"Adslide" <adslide7@gmail.com>',
-            to: email,
-            subject: 'Adslide Signup OTP',
-            template: 'verificationEmail',
+            from: 'FastMed',
+            to: "devendrasingh7465@gmail.com",
+            subject: 'FastMed - Appointment Confirmed!',
+            template: 'appointmentAccepted',
             context: {
-                name: user.name,
-                otp: user.otp
-            }// context is used to add dynamic data in mails
+                PatientName: patient.patient_name,
+                DoctorName: patient.doctor_name,
+                AppointmentDate: date,
+                AppointmentTime: time,
+                HospitalName: hospital.name,
+                HospitalAddress: hospital.address,
+            },
         };
         const info = await transporter.sendMail(mailOptions);
         console.log('Mail sent successfully!', info.messageId);
         res.json({ message: 'Email sent successfully!' });
     } catch (error) {
         console.error('Error sending email:', error);
-        res.status(500).json({ message: 'Error sending email', error: error.message });
+        res.status(500).json({ message: 'Error sending email', error: error.message }); // Send error details for debugging
     }
 }
+
+function splitDateTime(dateTimeString) {
+    const dateObj = new Date(dateTimeString);
+
+    // Options for date formatting (e.g., "21 May 2025")
+    const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+    const date = dateObj.toLocaleDateString('en-GB', dateOptions);
+
+    // Extract time in 24-hour format (HH:MM)
+    const hours = String(dateObj.getHours()).padStart(2, '0');
+    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+    const time = `${hours}:${minutes}`;
+
+    return { date, time };
+}
+
+
+
+
+
+
 module.exports = {
     loginMail,
     contactMail,
-    sendOTP,
+    appointmentConfirmed,
 };

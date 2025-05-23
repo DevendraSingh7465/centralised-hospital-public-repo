@@ -123,14 +123,28 @@ const PendingAppointments = () => {
     };
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BACKEND}/user/updateAppointmentStatus/${id}`,
+        `${
+          import.meta.env.VITE_API_BACKEND
+        }/user/updateAppointmentStatus/${id}`,
         data,
         {
           withCredentials: true,
         }
       );
       console.log(response.data);
-      toast.success("Appointment Cancelled Successfully");
+      toast.success("Appointment Confirmed!");
+      try {
+        const response1 = await axios.get(
+          `${import.meta.env.VITE_API_BACKEND}/mail/appointmentConfirm/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        // console.log(response1);
+      } catch (error) {
+        console.log("Error in sending Confirmation Mail:", error);
+      }
+
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -144,7 +158,9 @@ const PendingAppointments = () => {
     };
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BACKEND}/user/updateAppointmentStatus/${id}`,
+        `${
+          import.meta.env.VITE_API_BACKEND
+        }/user/updateAppointmentStatus/${id}`,
         data,
         {
           withCredentials: true,
