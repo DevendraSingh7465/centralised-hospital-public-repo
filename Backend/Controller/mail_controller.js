@@ -118,6 +118,8 @@ const appointmentConfirmed = async (req, res) => {
                 AppointmentTime: time,
                 HospitalName: hospital.name,
                 HospitalAddress: hospital.address,
+                lat: hospital.lat,
+                lng: hospital.lng,
             },
         };
         const info = await transporter.sendMail(mailOptions);
